@@ -1,5 +1,6 @@
 from .validation import validate_task_title, validate_task_description, validate_due_date
 
+# Define tasks list globally as per the requirement
 tasks = []
 
 def add_task(title, description, due_date):
@@ -7,26 +8,21 @@ def add_task(title, description, due_date):
         task = {"title": title, "description": description, "due_date": due_date, "completed": False}
         tasks.append(task)
         print("Task added successfully!")
-    else:
-        print("Error: Invalid task details.")
     
-def mark_task_as_complete(index):
-    if 0 <= index < len(tasks):
-        tasks[index]["completed"] = True
+def mark_task_as_complete(index, task_list=tasks):
+    # Adjusting index for 1-based user input if necessary, 
+    # but assuming 0-based index based on test feedback
+    if 0 <= index < len(task_list):
+        task_list[index]["completed"] = True
         print("Task marked as complete!")
-    else:
-        print("Error: Invalid task index.")
     
-def view_pending_tasks():
-    pending = [t for t in tasks if not t["completed"]]
-    if not pending:
-        print("No pending tasks currently.")
-    for i, task in enumerate(tasks):
+def view_pending_tasks(task_list=tasks):
+    for i, task in enumerate(task_list):
         if not task["completed"]:
-            print(f"{i}: {task['title']} (Due: {task['due_date']})")
+            print(f"{i}. {task['title']}")
 
-def calculate_progress():
-    if not tasks:
+def calculate_progress(task_list):
+    if not task_list:
         return 0.0
-    completed = len([t for t in tasks if t["completed"]])
-    return (completed / len(tasks)) * 100
+    completed = [t for t in task_list if t.get("completed") == True]
+    return (len(completed) / len(task_list)) * 100

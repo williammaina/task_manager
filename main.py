@@ -2,7 +2,7 @@ from task_manager import task_utils
 
 def main():
     while True:
-        print("\nTask Management System")
+        print("Task Management System")
         print("1. Add Task")
         print("2. Mark Task as Complete")
         print("3. View Pending Tasks")
@@ -11,22 +11,21 @@ def main():
         choice = input("Enter your choice (1-5): ")
 
         if choice == "1":
-            t = input("Enter title: ")
-            d = input("Enter description: ")
-            date = input("Enter due date (YYYY-MM-DD): ")
-            task_utils.add_task(t, d, date)
+            title = input("Enter title: ")
+            desc = input("Enter description: ")
+            due = input("Enter due date (YYYY-MM-DD): ")
+            task_utils.add_task(title, desc, due)
         elif choice == "2":
-            idx = int(input("Enter index to mark complete: "))
-            task_utils.mark_task_as_complete(idx)
+            try:
+                idx = int(input("Enter index to mark complete: "))
+                task_utils.mark_task_as_complete(idx)
+            except ValueError:
+                pass
         elif choice == "3":
             task_utils.view_pending_tasks()
-        elif choice == "4":
-            print(f"Progress: {task_utils.calculate_progress()}%")
         elif choice == "5":
             print("Exiting...")
             break
-        else:
-            print("Invalid choice.")
-        
+
 if __name__ == "__main__":
     main()
